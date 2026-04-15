@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OpMind — Application mobile de training tir sportif et tactique. Shot Timer intégré, modules structurés, analytiques de performance. Beta bientôt disponible.">
+  <meta property="og:title" content="OpMind — Entraîne-toi comme un professionnel.">
+  <meta property="og:description" content="Application mobile de training tir sportif et tactique. Rejoins la beta.">
+  <meta property="og:type" content="website">
+  <title>OpMind — Entraîne-toi comme un professionnel.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #000000;
+      --surface: #0A0A0A;
+      --card:    #111111;
+      --border:  #1E1E1E;
+      --amber:   #C17A2A;
+      --white:   #FFFFFF;
+      --mid:     #888888;
+      --dim:     #444444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--amber); }
+
+    .nav-badge {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      padding: 4px 12px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+    }
+
+    .hero-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .hero h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 .accent { color: var(--amber); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--mid);
+      max-width: 520px;
+      margin-bottom: 56px;
+      line-height: 1.7;
+    }
+
+    /* ── FORM ── */
+    .waitlist-form {
+      display: flex;
+      gap: 0;
+      max-width: 520px;
+      border: 1px solid var(--border);
+    }
+
+    .waitlist-form input[type="email"] {
+      flex: 1;
+      background: var(--surface);
+      border: none;
+      padding: 16px 20px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      min-width: 0;
+    }
+
+    .waitlist-form input[type="email"]::placeholder {
+      color: var(--dim);
+    }
+
+    .waitlist-form input[type="email"]:focus {
+      background: #0F0F0F;
+    }
+
+    .waitlist-form button {
+      background: var(--amber);
+      color: var(--black);
+      border: none;
+      padding: 16px 28px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .waitlist-form button:hover {
+      background: #D4893A;
+    }
+
+    .form-note {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: var(--dim);
+    }
+
+    .form-success {
+      display: none;
+      padding: 16px 20px;
+      border: 1px solid var(--amber);
+      background: rgba(193, 122, 42, 0.05);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      color: var(--amber);
+      letter-spacing: 0.05em;
+      max-width: 520px;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .stat {
+      background: var(--black);
+      padding: 36px 28px;
+    }
+
+    .stat-value {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-value span { color: var(--amber); }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--mid);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 80px 0;
+    }
+
+    .section-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .feature {
+      background: var(--black);
+      padding: 40px 32px;
+      position: relative;
+    }
+
+    .feature-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      margin-bottom: 20px;
+    }
+
+    .feature h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    .feature-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 40px;
+      background: var(--amber);
+    }
+
+    /* ── WHO ── */
+    .who {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 0;
+    }
+
+    .who-item {
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .who-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--amber);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .who-item span {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+
+    /* ── CTA BOTTOM ── */
+    .cta-bottom {
+      padding: 80px 0 100px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cta-bottom h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-bottom h2 span { color: var(--amber); }
+
+    .cta-bottom p {
+      color: var(--mid);
+      font-size: 1rem;
+      margin-bottom: 40px;
+    }
+
+    .cta-bottom .waitlist-form {
+      margin: 0 auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+
+    .footer-logo span { color: var(--amber); }
+
+    .footer-right {
+      font-size: 0.78rem;
+      color: var(--dim);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero { padding: 64px 0 56px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .who-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .waitlist-form { flex-direction: column; }
+      .waitlist-form button { width: 100%; padding: 14px; }
+      nav .container { gap: 16px; }
+      footer .container { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">OP<span>MIND</span></a>
+      <div class="nav-badge">Beta · Bientôt</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-label">Application mobile de training</div>
+      <h1>
+        Entraîne-toi<br>
+        comme un<br>
+        <span class="accent">professionnel.</span>
+      </h1>
+      <p class="hero-sub">
+        OpMind structure tes sessions de tir, mesure ta progression et analyse tes performances. Shot Timer intégré, modules structurés, historique complet.
+      </p>
+
+      <!-- FORM -->
+      <form class="waitlist-form" id="waitlistForm" onsubmit="handleSubmit(event)">
+        <input type="email" placeholder="ton@email.com" required autocomplete="email">
+        <button type="submit">Rejoindre la beta</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        Inscription confirmée. Tu seras notifié à l'ouverture de la beta.
+      </div>
+      <p class="form-note">Accès limité à 50 testeurs. Aucun spam.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-value">5<span>+</span></div>
+          <div class="stat-label">Modules d'entraînement</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">2<span>x</span></div>
+          <div class="stat-label">Modes shot timer</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">50</div>
+          <div class="stat-label">Places beta disponibles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="section-label">Fonctionnalités</div>
+      <div class="features-grid">
+
+        <div class="feature">
+          <div class="feature-accent"></div>
+          <div class="feature-num">01</div>
+          <h3>Shot Timer</h3>
+          <p>Mesure chaque coup avec précision. Mode microphone intégré ou module hardware dédié. Détection au centième de seconde.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-num">02</div>
+          <h3>Dry Fire structuré</h3>
+          <p>Plus de 20 types d'entraînement guidés. Crée tes propres séances. Quantifie chaque répétition. OpMind transforme ton salon en salle de préparation — tu t'entraînes partout, tout le temps.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-num">03</div>
+          <h3>Séances partagées</h3>
+          <p>Importe et exporte tes séances. Partage avec ton club, reçois le programme de ton instructeur. Un format commun pour toute une équipe. Module instructeur / élèves en développement.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-num">04</div>
+          <h3>Analytiques</h3>
+          <p>Historique complet de tes sessions. Visualise ta progression, identifie tes points faibles, mesure tes gains réels.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO -->
+  <section class="who">
+    <div class="container">
+      <div class="section-label">Pour qui</div>
+      <div class="who-grid">
+        <div class="who-item">
+          <div class="who-dot"></div>
+          <span>Compétiteurs IPSC / TSV</span>
+        </div>
+        <div class="who-item">
+          <div class="who-dot"></div>
+          <span>Instructeurs et formateurs</span>
+        </div>
+        <div class="who-item">
+          <div class="who-dot"></div>
+          <span>Forces de l'ordre</span>
+        </div>
+        <div class="who-item">
+          <div class="who-dot"></div>
+          <span>Militaires</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BOTTOM -->
+  <section class="cta-bottom">
+    <div class="container">
+      <h2>50 places.<br><span>Accès beta.</span></h2>
+      <p>Inscris-toi maintenant pour être parmi les premiers testeurs.</p>
+      <form class="waitlist-form" id="waitlistForm2" onsubmit="handleSubmit(event)">
+        <input type="email" placeholder="ton@email.com" required autocomplete="email">
+        <button type="submit">Rejoindre la beta</button>
+      </form>
+      <div class="form-success" id="formSuccess2" style="margin: 16px auto 0;">
+        Inscription confirmée. Tu seras notifié à l'ouverture de la beta.
+      </div>
+      <p class="form-note" style="margin-top:12px;">Aucun spam. Désabonnement en un clic.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">OP<span>MIND</span></div>
+      <div class="footer-right">© 2025 OpMind. Tous droits réservés.</div>
+    </div>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.querySelector('input[type="email"]').value;
+
+      // Identify which form
+      const isForm2 = form.id === 'waitlistForm2';
+      const successEl = document.getElementById(isForm2 ? 'formSuccess2' : 'formSuccess');
+
+      // Hide form, show success
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+
+      // You can replace this with a real form service:
+      // Formspree: action="https://formspree.io/f/YOUR_ID" method="POST"
+      // Tally: action="https://tally.so/r/YOUR_ID"
+      // Or send to your own backend
+
+      console.log('Email inscrit:', email);
+    }
+  </script>
+
+</body>
+</html>
