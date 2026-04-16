@@ -443,8 +443,10 @@
       </p>
 
       <!-- FORM -->
-      <form class="waitlist-form" id="waitlistForm" onsubmit="handleSubmit(event)">
-        <input type="email" placeholder="ton@email.com" required autocomplete="email">
+      <form class="waitlist-form" id="waitlistForm" action="https://formspree.io/f/meevenzq" method="POST">
+        <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email">
+        <input type="hidden" name="_next" value="https://opmind.fr?inscrit=1">
+        <input type="hidden" name="_subject" value="Nouvelle inscription beta OpMind">
         <button type="submit">Rejoindre la beta</button>
       </form>
       <div class="form-success" id="formSuccess">
@@ -539,8 +541,10 @@
     <div class="container">
       <h2>50 places.<br><span>Accès beta.</span></h2>
       <p>Inscris-toi maintenant pour être parmi les premiers testeurs.</p>
-      <form class="waitlist-form" id="waitlistForm2" onsubmit="handleSubmit(event)">
-        <input type="email" placeholder="ton@email.com" required autocomplete="email">
+      <form class="waitlist-form" id="waitlistForm2" action="https://formspree.io/f/meevenzq" method="POST">
+        <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email">
+        <input type="hidden" name="_next" value="https://opmind.fr?inscrit=1">
+        <input type="hidden" name="_subject" value="Nouvelle inscription beta OpMind">
         <button type="submit">Rejoindre la beta</button>
       </form>
       <div class="form-success" id="formSuccess2" style="margin: 16px auto 0;">
