@@ -91,6 +91,7 @@
       text-transform: uppercase;
     }
 
+    /* HERO */
     .hero {
       padding: 100px 0 80px;
       position: relative;
@@ -207,6 +208,7 @@
       margin-top: 12px;
     }
 
+    /* STATS */
     .stats {
       padding: 60px 0;
       border-top: 1px solid var(--border);
@@ -245,8 +247,7 @@
       font-family: 'Rajdhani', sans-serif;
     }
 
-    .features { padding: 80px 0; }
-
+    /* SECTION LABEL */
     .section-label {
       font-family: 'Rajdhani', sans-serif;
       font-size: 0.75rem;
@@ -266,6 +267,38 @@
       height: 1px;
       background: var(--border);
     }
+
+    /* PROBLÈME */
+    .problem {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problem-inner {
+      border-left: 3px solid var(--amber);
+      padding-left: 32px;
+    }
+
+    .problem-inner h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .problem-inner h2 span { color: var(--amber); }
+
+    .problem-inner p {
+      font-size: 1rem;
+      color: var(--mid);
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* FEATURES */
+    .features { padding: 80px 0; }
 
     .features-grid {
       display: grid;
@@ -313,41 +346,241 @@
       background: var(--amber);
     }
 
-    .who {
+    /* SHOT TIMER */
+    .shot-timer {
       padding: 80px 0;
       border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .shot-timer-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .shot-timer-text h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .shot-timer-text h2 span { color: var(--amber); }
+
+    .shot-timer-text p {
+      font-size: 0.95rem;
+      color: var(--mid);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .shot-timer-specs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .spec-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.88rem;
+    }
+
+    .spec-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+
+    .spec-line span { color: var(--mid); }
+
+    .timer-display {
+      border: 1px solid var(--border);
+      background: var(--black);
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .timer-display-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .timer-display-time {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 4rem;
+      color: #E84040;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .timer-display-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+    .timer-badge {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      padding: 4px 12px;
+      text-transform: uppercase;
+    }
+
+    /* POUR QUI */
+    .who {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
     }
 
     .who-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
     }
 
-    .who-item {
-      border: 1px solid var(--border);
-      padding: 24px 28px;
+    .who-card {
+      background: var(--black);
+      padding: 36px 28px;
+      position: relative;
+    }
+
+    .who-card-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--amber);
+    }
+
+    .who-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .who-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .who-card ul li {
+      font-size: 0.85rem;
+      color: var(--mid);
       display: flex;
       align-items: flex-start;
-      gap: 16px;
+      gap: 10px;
+      line-height: 1.5;
     }
 
-    .who-dot {
-      width: 6px;
-      height: 6px;
+    .who-card ul li::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
       background: var(--amber);
-      margin-top: 8px;
+      margin-top: 6px;
       flex-shrink: 0;
     }
 
-    .who-item span {
+    /* TIMELINE */
+    .timeline {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .timeline-step {
+      background: var(--black);
+      padding: 32px 24px;
+      position: relative;
+    }
+
+    .timeline-step.active {
+      background: var(--surface);
+    }
+
+    .timeline-step-num {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 1.05rem;
+      font-size: 0.7rem;
       font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      margin-bottom: 16px;
+    }
+
+    .timeline-step.active .timeline-step-num {
+      color: var(--amber);
+    }
+
+    .timeline-step h4 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
       letter-spacing: 0.05em;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+
+    .timeline-step.active h4 {
       color: var(--white);
     }
 
+    .timeline-step p {
+      font-size: 0.8rem;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    .timeline-step.active p {
+      color: var(--mid);
+    }
+
+    .timeline-active-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--amber);
+    }
+
+    /* CTA BOTTOM */
     .cta-bottom {
       padding: 80px 0 100px;
       border-top: 1px solid var(--border);
@@ -388,15 +621,21 @@
     .footer-logo span { color: var(--amber); }
     .footer-right { font-size: 0.78rem; color: var(--dim); }
 
+    @media (max-width: 768px) {
+      .shot-timer-inner { grid-template-columns: 1fr; gap: 40px; }
+      .who-grid { grid-template-columns: 1fr; }
+      .timeline-steps { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 640px) {
       .hero { padding: 64px 0 56px; }
       .features-grid { grid-template-columns: 1fr; }
-      .who-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; }
       .waitlist-form { flex-direction: column; }
       .waitlist-form button { width: 100%; padding: 14px; }
       nav .container { gap: 16px; }
       footer .container { flex-direction: column; gap: 12px; text-align: center; }
+      .timeline-steps { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -409,6 +648,7 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="container">
       <div class="hero-label">Application mobile de training</div>
@@ -435,6 +675,7 @@
     </div>
   </section>
 
+  <!-- STATS -->
   <section class="stats">
     <div class="container">
       <div class="stats-grid">
@@ -454,64 +695,162 @@
     </div>
   </section>
 
+  <!-- PROBLÈME -->
+  <section class="problem">
+    <div class="container">
+      <div class="section-label">Le constat</div>
+      <div class="problem-inner">
+        <h2>La plupart des tireurs s'entraînent<br><span>sans données. Sans structure. Sans suivi.</span></h2>
+        <p>
+          Les séances se succèdent sans capitalisation. Les progrès sont estimés, pas mesurés. Les points faibles ne sont jamais identifiés avec précision. OpMind change ça — chaque session laisse une trace exploitable, chaque répétition compte.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
   <section class="features">
     <div class="container">
-      <div class="section-label">Fonctionnalités</div>
+      <div class="section-label">Modules</div>
       <div class="features-grid">
 
         <div class="feature">
           <div class="feature-accent"></div>
-          <div class="feature-num">01</div>
-          <h3>Shot Timer</h3>
-          <p>Mesure chaque coup avec précision. Mode microphone intégré ou module hardware dédié. Détection au centième de seconde.</p>
+          <div class="feature-num">01 — MODULE BASIQUE</div>
+          <h3>Séances structurées</h3>
+          <p>Exercices par blocs, validation tir par tir, feedback immédiat. Historique complet de chaque passage. Analyses de performance session après session.</p>
         </div>
 
         <div class="feature">
-          <div class="feature-num">02</div>
-          <h3>Dry Fire structuré</h3>
-          <p>Plus de 20 types d'entraînement guidés. Crée tes propres séances. Quantifie chaque répétition. OpMind transforme ton salon en salle de préparation — tu t'entraînes partout, tout le temps.</p>
+          <div class="feature-num">02 — DRY FIRE</div>
+          <h3>Entraînement à sec</h3>
+          <p>17 exercices guidés en 6 catégories. Travail de la prise en main, du dégainage, de la visée. Partout, à tout moment, sans munitions.</p>
         </div>
 
         <div class="feature">
-          <div class="feature-num">03</div>
-          <h3>Séances partagées</h3>
-          <p>Importe et exporte tes séances. Partage avec ton club, reçois le programme de ton instructeur. Un format commun pour toute une équipe. Module instructeur / élèves en développement.</p>
+          <div class="feature-num">03 — SPÉCIALES</div>
+          <h3>Exercices libres</h3>
+          <p>Banque d'exercices spécifiques importables et partageables. Compatible avec les programmes instructeurs. Format ouvert pour les équipes et unités.</p>
         </div>
 
         <div class="feature">
-          <div class="feature-num">04</div>
-          <h3>Analytiques</h3>
-          <p>Historique complet de tes sessions. Visualise ta progression, identifie tes points faibles, mesure tes gains réels.</p>
+          <div class="feature-num">04 — PERFORMANCE</div>
+          <h3>Analytiques avancées</h3>
+          <p>Hit factor, courbes de fatigue, scoring de progression, comparaison inter-séances, indices de régularité. Les données terrain, pas des estimations.</p>
         </div>
 
       </div>
     </div>
   </section>
 
+  <!-- SHOT TIMER -->
+  <section class="shot-timer">
+    <div class="container">
+      <div class="section-label">Shot Timer</div>
+      <div class="shot-timer-inner">
+        <div class="shot-timer-text">
+          <h2>Un shot timer<br><span>développé en interne.</span></h2>
+          <p>
+            Pas un accessoire tiers. OpMind intègre son propre module hardware — conçu et calibré spécifiquement pour l'application. Communication sans fil directe, latence maîtrisée, robustesse terrain.
+          </p>
+          <div class="shot-timer-specs">
+            <div class="spec-line"><div class="spec-dot"></div><span>Détection au centième de seconde</span></div>
+            <div class="spec-line"><div class="spec-dot"></div><span>Connexion BLE — intégration native à l'app</span></div>
+            <div class="spec-line"><div class="spec-dot"></div><span>Mode microphone embarqué en secours</span></div>
+            <div class="spec-line"><div class="spec-dot"></div><span>Conçu pour une utilisation en conditions réelles</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="timer-display">
+            <div class="timer-display-label">Dernier coup</div>
+            <div class="timer-display-time">0.31s</div>
+            <div class="timer-display-sub">Split time</div>
+            <div class="timer-badge">Hardware OpMind</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POUR QUI -->
   <section class="who">
     <div class="container">
       <div class="section-label">Pour qui</div>
       <div class="who-grid">
-        <div class="who-item">
-          <div class="who-dot"></div>
-          <span>Compétiteurs IPSC / TSV</span>
+
+        <div class="who-card">
+          <div class="who-card-accent"></div>
+          <h3>Compétiteurs</h3>
+          <ul>
+            <li>IPSC / TSV / tir de vitesse</li>
+            <li>Suivi des scores et hit factor</li>
+            <li>Progression mesurable entre les compétitions</li>
+            <li>Entraînement dry fire structuré</li>
+          </ul>
         </div>
-        <div class="who-item">
-          <div class="who-dot"></div>
-          <span>Instructeurs et formateurs</span>
+
+        <div class="who-card">
+          <div class="who-card-accent"></div>
+          <h3>Forces de l'ordre</h3>
+          <ul>
+            <li>Maintien et vérification des acquis</li>
+            <li>Traçabilité des séances de formation</li>
+            <li>Protocoles standardisés exportables</li>
+            <li>Suivi individuel par opérateur</li>
+          </ul>
         </div>
-        <div class="who-item">
-          <div class="who-dot"></div>
-          <span>Forces de l'ordre</span>
+
+        <div class="who-card">
+          <div class="who-card-accent"></div>
+          <h3>Militaires</h3>
+          <ul>
+            <li>Préparation et maintien en condition</li>
+            <li>Exercices adaptables aux contraintes terrain</li>
+            <li>Dry fire exploitable sans stand de tir</li>
+            <li>Données de performance exportables</li>
+          </ul>
         </div>
-        <div class="who-item">
-          <div class="who-dot"></div>
-          <span>Militaires</span>
-        </div>
+
       </div>
     </div>
   </section>
 
+  <!-- OÙ ON EN EST -->
+  <section class="timeline">
+    <div class="container">
+      <div class="section-label">Avancement</div>
+      <div class="timeline-steps">
+
+        <div class="timeline-step">
+          <div class="timeline-step-num">01</div>
+          <h4>Développement</h4>
+          <p>App et hardware développés. Modules validés en conditions réelles.</p>
+        </div>
+
+        <div class="timeline-step active">
+          <div class="timeline-active-bar"></div>
+          <div class="timeline-step-num">02 — EN COURS</div>
+          <h4>Beta fermée</h4>
+          <p>50 testeurs sélectionnés. Profils IPSC, instructeurs, LE et militaires.</p>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-step-num">03</div>
+          <h4>Lancement</h4>
+          <p>App Store & Google Play. Abonnement 4,99 €/mois ou 44,99 €/an.</p>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-step-num">04</div>
+          <h4>Écosystème</h4>
+          <p>Pods de détection terrain, mode instructeur, déploiement institutionnel.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BOTTOM -->
   <section class="cta-bottom">
     <div class="container">
       <h2>50 places.<br><span>Accès beta.</span></h2>
