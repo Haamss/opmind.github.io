@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* ── GRID BACKGROUND ── */
     body::before {
       content: '';
       position: fixed;
@@ -49,7 +48,6 @@
       z-index: 0;
     }
 
-    /* ── LAYOUT ── */
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -58,7 +56,6 @@
       z-index: 1;
     }
 
-    /* ── NAV ── */
     nav {
       padding: 28px 0;
       border-bottom: 1px solid var(--border);
@@ -94,7 +91,6 @@
       text-transform: uppercase;
     }
 
-    /* ── HERO ── */
     .hero {
       padding: 100px 0 80px;
       position: relative;
@@ -140,7 +136,6 @@
       line-height: 1.7;
     }
 
-    /* ── FORM ── */
     .waitlist-form {
       display: flex;
       gap: 0;
@@ -160,13 +155,8 @@
       min-width: 0;
     }
 
-    .waitlist-form input[type="email"]::placeholder {
-      color: var(--dim);
-    }
-
-    .waitlist-form input[type="email"]:focus {
-      background: #0F0F0F;
-    }
+    .waitlist-form input[type="email"]::placeholder { color: var(--dim); }
+    .waitlist-form input[type="email"]:focus { background: #0F0F0F; }
 
     .waitlist-form button {
       background: var(--amber);
@@ -180,12 +170,11 @@
       text-transform: uppercase;
       cursor: pointer;
       white-space: nowrap;
-      transition: background 0.2s;
+      transition: background 0.2s, opacity 0.2s;
     }
 
-    .waitlist-form button:hover {
-      background: #D4893A;
-    }
+    .waitlist-form button:hover { background: #D4893A; }
+    .waitlist-form button:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .form-note {
       margin-top: 12px;
@@ -205,7 +194,19 @@
       max-width: 520px;
     }
 
-    /* ── STATS ── */
+    .form-error {
+      display: none;
+      padding: 16px 20px;
+      border: 1px solid #EF4444;
+      background: rgba(239, 68, 68, 0.05);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      color: #EF4444;
+      letter-spacing: 0.05em;
+      max-width: 520px;
+      margin-top: 12px;
+    }
+
     .stats {
       padding: 60px 0;
       border-top: 1px solid var(--border);
@@ -244,10 +245,7 @@
       font-family: 'Rajdhani', sans-serif;
     }
 
-    /* ── FEATURES ── */
-    .features {
-      padding: 80px 0;
-    }
+    .features { padding: 80px 0; }
 
     .section-label {
       font-family: 'Rajdhani', sans-serif;
@@ -315,7 +313,6 @@
       background: var(--amber);
     }
 
-    /* ── WHO ── */
     .who {
       padding: 80px 0;
       border-top: 1px solid var(--border);
@@ -325,7 +322,6 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
-      margin-top: 0;
     }
 
     .who-item {
@@ -352,7 +348,6 @@
       color: var(--white);
     }
 
-    /* ── CTA BOTTOM ── */
     .cta-bottom {
       padding: 80px 0 100px;
       border-top: 1px solid var(--border);
@@ -368,18 +363,9 @@
     }
 
     .cta-bottom h2 span { color: var(--amber); }
+    .cta-bottom p { color: var(--mid); font-size: 1rem; margin-bottom: 40px; }
+    .cta-bottom .waitlist-form { margin: 0 auto; }
 
-    .cta-bottom p {
-      color: var(--mid);
-      font-size: 1rem;
-      margin-bottom: 40px;
-    }
-
-    .cta-bottom .waitlist-form {
-      margin: 0 auto;
-    }
-
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 32px 0;
@@ -400,13 +386,8 @@
     }
 
     .footer-logo span { color: var(--amber); }
+    .footer-right { font-size: 0.78rem; color: var(--dim); }
 
-    .footer-right {
-      font-size: 0.78rem;
-      color: var(--dim);
-    }
-
-    /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .hero { padding: 64px 0 56px; }
       .features-grid { grid-template-columns: 1fr; }
@@ -421,7 +402,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="container">
       <a href="#" class="logo">OP<span>MIND</span></a>
@@ -429,7 +409,6 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="container">
       <div class="hero-label">Application mobile de training</div>
@@ -442,21 +421,20 @@
         OpMind structure tes sessions de tir, mesure ta progression et analyse tes performances. Shot Timer intégré, modules structurés, historique complet.
       </p>
 
-      <!-- FORM -->
-      <form class="waitlist-form" id="waitlistForm" action="https://formspree.io/f/meevenzq" method="POST">
+      <form class="waitlist-form" id="waitlistForm">
         <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email">
-        <input type="hidden" name="_next" value="https://opmind.fr?inscrit=1">
-        <input type="hidden" name="_subject" value="Nouvelle inscription beta OpMind">
         <button type="submit">Rejoindre la beta</button>
       </form>
       <div class="form-success" id="formSuccess">
         Inscription confirmée. Tu seras notifié à l'ouverture de la beta.
       </div>
+      <div class="form-error" id="formError">
+        Une erreur est survenue. Réessaie dans quelques secondes.
+      </div>
       <p class="form-note">Accès limité à 50 testeurs. Aucun spam.</p>
     </div>
   </section>
 
-  <!-- STATS -->
   <section class="stats">
     <div class="container">
       <div class="stats-grid">
@@ -476,7 +454,6 @@
     </div>
   </section>
 
-  <!-- FEATURES -->
   <section class="features">
     <div class="container">
       <div class="section-label">Fonctionnalités</div>
@@ -511,7 +488,6 @@
     </div>
   </section>
 
-  <!-- WHO -->
   <section class="who">
     <div class="container">
       <div class="section-label">Pour qui</div>
@@ -536,53 +512,72 @@
     </div>
   </section>
 
-  <!-- CTA BOTTOM -->
   <section class="cta-bottom">
     <div class="container">
       <h2>50 places.<br><span>Accès beta.</span></h2>
       <p>Inscris-toi maintenant pour être parmi les premiers testeurs.</p>
-      <form class="waitlist-form" id="waitlistForm2" action="https://formspree.io/f/meevenzq" method="POST">
+      <form class="waitlist-form" id="waitlistForm2">
         <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email">
-        <input type="hidden" name="_next" value="https://opmind.fr?inscrit=1">
-        <input type="hidden" name="_subject" value="Nouvelle inscription beta OpMind">
         <button type="submit">Rejoindre la beta</button>
       </form>
       <div class="form-success" id="formSuccess2" style="margin: 16px auto 0;">
         Inscription confirmée. Tu seras notifié à l'ouverture de la beta.
       </div>
+      <div class="form-error" id="formError2" style="margin: 12px auto 0;">
+        Une erreur est survenue. Réessaie dans quelques secondes.
+      </div>
       <p class="form-note" style="margin-top:12px;">Aucun spam. Désabonnement en un clic.</p>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-logo">OP<span>MIND</span></div>
-      <div class="footer-right">© 2025 OpMind. Tous droits réservés.</div>
+      <div class="footer-right">© 2026 OpMind. Tous droits réservés.</div>
     </div>
   </footer>
 
   <script>
-    function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const email = form.querySelector('input[type="email"]').value;
+    async function submitForm(formId, successId, errorId) {
+      const form     = document.getElementById(formId);
+      const success  = document.getElementById(successId);
+      const error    = document.getElementById(errorId);
+      const btn      = form.querySelector('button');
+      const email    = form.querySelector('input[type="email"]').value;
 
-      // Identify which form
-      const isForm2 = form.id === 'waitlistForm2';
-      const successEl = document.getElementById(isForm2 ? 'formSuccess2' : 'formSuccess');
+      btn.disabled   = true;
+      btn.textContent = '...';
+      error.style.display = 'none';
 
-      // Hide form, show success
-      form.style.display = 'none';
-      successEl.style.display = 'block';
+      try {
+        const res = await fetch('https://formspree.io/f/meevenzq', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, _subject: 'Nouvelle inscription beta OpMind' })
+        });
 
-      // You can replace this with a real form service:
-      // Formspree: action="https://formspree.io/f/YOUR_ID" method="POST"
-      // Tally: action="https://tally.so/r/YOUR_ID"
-      // Or send to your own backend
-
-      console.log('Email inscrit:', email);
+        if (res.ok) {
+          form.style.display   = 'none';
+          success.style.display = 'block';
+        } else {
+          throw new Error('server');
+        }
+      } catch (e) {
+        btn.disabled    = false;
+        btn.textContent = 'Rejoindre la beta';
+        error.style.display = 'block';
+      }
     }
+
+    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm('waitlistForm', 'formSuccess', 'formError');
+    });
+
+    document.getElementById('waitlistForm2').addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm('waitlistForm2', 'formSuccess2', 'formError2');
+    });
   </script>
 
 </body>
