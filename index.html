@@ -1404,6 +1404,70 @@
   </div>
 </section>
 
+
+<!-- CONTACT -->
+<section style="background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.08);padding:100px 40px;" id="contact">
+  <div style="max-width:600px;margin:0 auto;text-align:center;">
+    <div style="font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A0000;margin-bottom:16px;">Contact</div>
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.95;margin-bottom:16px;">Une question ?</h2>
+    <p style="font-size:15px;font-weight:300;color:#AAAAAA;margin-bottom:48px;line-height:1.7;">Partenariat, presse, accès bêta anticipé — écris-nous directement.</p>
+    <form id="contact-form" style="display:flex;flex-direction:column;gap:12px;text-align:left;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <input type="text" id="cf-name" placeholder="Ton nom" required style="background:#141414;border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Barlow',sans-serif;font-size:14px;padding:14px 20px;outline:none;width:100%;">
+        <input type="email" id="cf-email" placeholder="ton@email.fr" required style="background:#141414;border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Barlow',sans-serif;font-size:14px;padding:14px 20px;outline:none;width:100%;">
+      </div>
+      <textarea id="cf-message" placeholder="Ton message..." required rows="5" style="background:#141414;border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Barlow',sans-serif;font-size:14px;padding:14px 20px;outline:none;resize:vertical;width:100%;"></textarea>
+      <button type="submit" style="background:#7A0000;color:#fff;border:none;padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;align-self:flex-start;transition:background 0.2s;">Envoyer</button>
+    </form>
+    <div id="contact-success" style="display:none;background:rgba(122,0,0,0.1);border:1px solid rgba(122,0,0,0.3);padding:16px 24px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.08em;color:#fff;margin-top:16px;">
+      Message envoyé — on te répond rapidement.
+    </div>
+    <div id="contact-error" style="display:none;color:#ff4444;font-size:13px;margin-top:12px;"></div>
+  </div>
+</section>
+
+<script>
+  const contactForm = document.getElementById('contact-form');
+  const contactSuccess = document.getElementById('contact-success');
+  const contactError = document.getElementById('contact-error');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button');
+      btn.textContent = 'Envoi...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://iqhbxzhpndaeivrzdzyy.supabase.co/functions/v1/contact-form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('cf-name').value,
+            email: document.getElementById('cf-email').value,
+            message: document.getElementById('cf-message').value,
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          contactForm.style.display = 'none';
+          contactSuccess.style.display = 'block';
+        } else {
+          contactError.textContent = "Erreur lors de l'envoi. Réessaie ou écris à contact@opmind.fr";
+          contactError.style.display = 'block';
+          btn.textContent = 'Envoyer';
+          btn.disabled = false;
+        }
+      } catch(err) {
+        contactError.textContent = "Erreur réseau. Écris directement à contact@opmind.fr";
+        contactError.style.display = 'block';
+        btn.textContent = 'Envoyer';
+        btn.disabled = false;
+      }
+    });
+  }
+</script>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -1414,7 +1478,7 @@
     <ul class="footer-links">
       <li><a href="#fonctionnalites">Fonctionnalités</a></li>
       <li><a href="#waitlist">Waitlist</a></li>
-      <li><a href="mailto:contact@opmind.fr">Contact</a></li>
+      <li><a href="#contact">Contact</a></li>
       <li><a href="/privacy.html">Confidentialité</a></li>
     </ul>
 
@@ -1422,7 +1486,7 @@
       <a href="https://www.instagram.com/opmindapp/" target="_blank" rel="noopener" title="Instagram">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       </a>
-      <a href="mailto:contact@opmind.fr" title="Email">
+      <a href="#contact" title="Email">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </a>
     </div>
