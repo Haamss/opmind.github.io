@@ -1102,7 +1102,7 @@
   <div class="hero-grid"></div>
   <div class="hero-content">
     <div>
-      <div class="hero-label animate">Application de formation au tir</div>
+      <div class="hero-label animate">Application de training au tir</div>
       <h1 class="hero-title animate delay-1">
         Structure<br>ton tir.<br>Analyse.<br><span>Progresse.</span>
       </h1>
@@ -1393,7 +1393,7 @@
     <h2 class="cta-title">Tu veux progresser<br>ou continuer à <span>tirer au hasard</span>&nbsp;?</h2>
     <p class="cta-desc">Rejoins la waitlist et sois parmi les premiers à utiliser OpMind. Accès bêta, tarif fondateur.</p>
 
-    <form class="waitlist-form" id="waitlist-form" action="https://formspree.io/f/meevenzq" method="POST">
+    <form class="waitlist-form" id="waitlist-form" action="https://iqhbxzhpndaeivrzdzyy.supabase.co/functions/v1/waitlist-signup" method="POST">
       <input type="email" name="email" class="waitlist-input" placeholder="ton@email.fr" required>
       <button type="submit" class="waitlist-btn">Rejoindre</button>
     </form>
@@ -1504,19 +1504,22 @@
   if (form) {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
-      const data = new FormData(form);
+      const emailValue = form.querySelector('input[type="email"]').value;
       try {
         const res = await fetch(form.action, {
           method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailValue })
         });
-        if (res.ok) {
+        const result = await res.json();
+        if (res.ok && result.success) {
           form.style.display = 'none';
           success.style.display = 'block';
+        } else {
+          console.error('Erreur inscription:', result);
         }
       } catch(err) {
-        form.submit();
+        console.error('Erreur réseau:', err);
       }
     });
   }
