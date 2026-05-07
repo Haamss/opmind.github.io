@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<script>
+  const path = window.location.pathname;
+  const id = path.split('/results/')[1]?.replace(/\//g,'');
+  if(id) window.location.replace('/results/?id='+id);
+  else window.location.replace('/');
+</script></head></html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Résultats de compétition OpMind — classement, hit factor, scores tireurs.">
+<title>Résultats — OpMind</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+        background: #000000;
+        color: #FFFFFF;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 15px;
+        line-height: 1.4;
+        min-height: 100vh;
+    }
+
+    .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 32px 20px 60px;
+    }
+
+    /* ── Brand ─────────────────────────────────── */
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 28px;
+    }
+    .brand-name {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 4px;
+        color: #FFFFFF;
+    }
+    .brand-accent {
+        color: #7A0000;
+    }
+
+    /* ── States ────────────────────────────────── */
+    .state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #555;
+    }
+    .state-error { color: #7A2020; }
+
+    .spinner {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #1A1A1A;
+        border-top-color: #7A0000;
+        border-radius: 50%;
+        animation: spin 800ms linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Header compétition ────────────────────── */
+    .header {
+        border-bottom: 3px solid #7A0000;
+        padding-bottom: 18px;
+        margin-bottom: 24px;
+    }
+    .header-tag {
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: #7A0000;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .header-title {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        word-break: break-word;
+    }
+    .header-meta {
+        font-size: 14px;
+        color: #888;
+    }
+    .status-pill {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 4px 10px;
+        border: 1px solid #7A0000;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #7A0000;
+    }
+    .status-pill.draft    { border-color: #555; color: #888; }
+    .status-pill.active   { border-color: #7A0000; color: #7A0000; }
+    .status-pill.finished { border-color: #FFFFFF; color: #FFFFFF; }
+
+    /* ── Tableau ───────────────────────────────── */
+    .table-wrap {
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #0A0A0A;
+        border: 1px solid #1A1A1A;
+    }
+    thead tr {
+        background: #7A0000;
+        color: #FFFFFF;
+    }
+    thead th {
+        padding: 12px 14px;
+        text-align: left;
+        font-size: 11px;
+        letter-spacing: 2px;
+        font-weight: 700;
+    }
+    thead th.center { text-align: center; }
+    thead th.right  { text-align: right; }
+
+    tbody td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #111;
+        font-size: 14px;
+        color: #DDD;
+    }
+    tbody td.center { text-align: center; }
+    tbody td.right  { text-align: right; font-variant-numeric: tabular-nums; }
+
+    tbody tr.rank-1 { background: rgba(122, 0, 0, 0.18); }
+    tbody tr.rank-2 { background: rgba(255, 255, 255, 0.04); }
+    tbody tr.rank-3 { background: rgba(255, 255, 255, 0.02); }
+
+    .rank-num {
+        font-weight: 700;
+        font-size: 16px;
+        color: #888;
+    }
+    tr.rank-1 .rank-num { color: #FF4040; font-size: 20px; }
+    tr.rank-2 .rank-num { color: #EEE; }
+    tr.rank-3 .rank-num { color: #CCC; }
+
+    .shooter-name { font-weight: 700; color: #EEE; }
+    tr.rank-1 .shooter-name { color: #FF4040; }
+
+    .pct-cell {
+        font-weight: 700;
+        font-size: 16px;
+        color: #BBB;
+    }
+    tr.rank-1 .pct-cell { color: #FF4040; }
+
+    .division { font-size: 13px; color: #888; }
+
+    /* ── Footer ────────────────────────────────── */
+    .footer {
+        margin-top: 36px;
+        padding-top: 16px;
+        border-top: 1px solid #1A1A1A;
+        font-size: 11px;
+        color: #555;
+        text-align: center;
+        letter-spacing: 1.5px;
+    }
+    .footer a {
+        color: #7A0000;
+        text-decoration: none;
+        font-weight: 700;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ────────────────────────────── */
+    @media (max-width: 600px) {
+        .wrap         { padding: 24px 14px 40px; }
+        .header-title { font-size: 22px; }
+        .header-meta  { font-size: 13px; }
+        thead th, tbody td { padding: 10px 8px; font-size: 12px; }
+        thead th.col-division, tbody td.col-division { display: none; }
+    }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+    <!-- Brand -->
+    <div class="brand">
+        <span class="brand-name">OP<span class="brand-accent">MIND</span></span>
+    </div>
+
+    <!-- Container : rendu dynamique -->
+    <div id="root">
+        <div class="state">
+            <div class="spinner"></div>
+            <div style="margin-top: 14px; font-size: 12px; letter-spacing: 2px;">CHARGEMENT…</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Résultats générés par <a href="https://opmind.fr">OpMind</a> — opmind.fr
+    </div>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    var SUPABASE_URL  = 'https://iqhbxzhpndaeivrzdzyy.supabase.co';
+    var SUPABASE_KEY  = 'sb_publishable_hcKSJR3-e6ayh6E9xh_lFQ_7QEQVXX4';
+
+    // ── Récupération de l'ID (?id=… OU /results/<id>/) ────────────────────────
+    function getCompetitionId() {
+        var params = new URLSearchParams(window.location.search);
+        var fromQuery = params.get('id');
+        if (fromQuery) return fromQuery.trim();
+
+        var match = window.location.pathname.match(/\/results\/([^/]+?)\/?$/);
+        if (match && match[1] && match[1] !== 'index.html') return match[1];
+
+        return null;
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function escapeHtml(value) {
+        if (value == null) return '';
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function formatDate(iso) {
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso || '';
+        return d.toLocaleDateString('fr-FR', {
+            day: '2-digit', month: 'long', year: 'numeric'
+        });
+    }
+
+    function statusLabel(s) {
+        if (s === 'draft') return 'DRAFT';
+        if (s === 'active') return 'ACTIVE';
+        if (s === 'finished') return 'TERMINÉE';
+        return (s || '').toUpperCase();
+    }
+
+    // ── Calcul du leaderboard (mirror exact de getLeaderboard du store) ──────
+    function computeLeaderboard(competition) {
+        var shooters = Array.isArray(competition.shooters) ? competition.shooters : [];
+        var stages   = Array.isArray(competition.stages)   ? competition.stages   : [];
+
+        var aggregates = shooters.map(function (shooter) {
+            var totalHitFactor = 0;
+            var totalPoints    = 0;
+            var totalTime      = 0;
+            var stagesCompleted = 0;
+
+            stages.forEach(function (stage) {
+                var scores = Array.isArray(stage.scores) ? stage.scores : [];
+                var score = scores.find(function (sc) { return sc.shooterId === shooter.id; });
+                if (!score || score.dnf) return;
+                totalHitFactor  += Number(score.hitFactor)   || 0;
+                totalPoints     += Number(score.points)      || 0;
+                totalTime       += Number(score.timeSeconds) || 0;
+                stagesCompleted += 1;
+            });
+
+            return {
+                shooter: shooter,
+                totalHitFactor: totalHitFactor,
+                totalPoints: totalPoints,
+                totalTime: totalTime,
+                stagesCompleted: stagesCompleted
+            };
+        });
+
+        var maxTotalHF = aggregates.reduce(function (max, a) {
+            return a.totalHitFactor > max ? a.totalHitFactor : max;
+        }, 0);
+
+        var entries = aggregates.map(function (a) {
+            return Object.assign({}, a, {
+                percentageScore: maxTotalHF > 0
+                    ? Math.round((a.totalHitFactor / maxTotalHF) * 10000) / 100
+                    : 0
+            });
+        });
+
+        entries.sort(function (a, b) { return b.percentageScore - a.percentageScore; });
+        return entries;
+    }
+
+    // ── Fetch + render ───────────────────────────────────────────────────────
+    function showState(html) {
+        document.getElementById('root').innerHTML = html;
+    }
+
+    function showError(msg) {
+        showState(
+            '<div class="state state-error">' +
+                '<div style="font-size: 14px; letter-spacing: 2px; font-weight: 700;">' + escapeHtml(msg) + '</div>' +
+            '</div>'
+        );
+    }
+
+    function renderCompetition(competition) {
+        var entries  = computeLeaderboard(competition);
+        var hasScores = entries.some(function (e) { return e.stagesCompleted > 0; });
+
+        var rowsHtml;
+        if (entries.length === 0 || !hasScores) {
+            rowsHtml = '<tr><td colspan="6" style="padding: 36px; text-align: center; color: #555; font-style: italic;">Aucun score enregistré pour cette compétition.</td></tr>';
+        } else {
+            rowsHtml = entries.map(function (entry, i) {
+                var rank = i + 1;
+                var rankClass = rank <= 3 ? 'rank-' + rank : '';
+                return (
+                    '<tr class="' + rankClass + '">' +
+                        '<td class="center"><span class="rank-num">' + rank + '</span></td>' +
+                        '<td><span class="shooter-name">' + escapeHtml(entry.shooter.name) + '</span></td>' +
+                        '<td class="col-division"><span class="division">' + escapeHtml(entry.shooter.division || '—') + '</span></td>' +
+                        '<td class="center">' + entry.stagesCompleted + '</td>' +
+                        '<td class="right">' + entry.totalHitFactor.toFixed(4) + '</td>' +
+                        '<td class="right"><span class="pct-cell">' + entry.percentageScore.toFixed(2) + '%</span></td>' +
+                    '</tr>'
+                );
+            }).join('');
+        }
+
+        var status = competition.status || 'draft';
+        var location = competition.location ? ' · ' + escapeHtml(competition.location) : '';
+        var nbShooters = (competition.shooters || []).length;
+
+        showState(
+            '<div class="header">' +
+                '<div class="header-tag">RÉSULTATS</div>' +
+                '<h1 class="header-title">' + escapeHtml(competition.name || '') + '</h1>' +
+                '<div class="header-meta">' +
+                    escapeHtml(formatDate(competition.date)) + location +
+                    ' · ' + nbShooters + ' tireur' + (nbShooters > 1 ? 's' : '') +
+                '</div>' +
+                '<div class="status-pill ' + escapeHtml(status) + '">' + escapeHtml(statusLabel(status)) + '</div>' +
+            '</div>' +
+            '<div class="table-wrap">' +
+                '<table>' +
+                    '<thead>' +
+                        '<tr>' +
+                            '<th class="center" style="width: 60px;">RANG</th>' +
+                            '<th>TIREUR</th>' +
+                            '<th class="col-division">DIVISION</th>' +
+                            '<th class="center">STAGES</th>' +
+                            '<th class="right">HF TOTAL</th>' +
+                            '<th class="right">SCORE</th>' +
+                        '</tr>' +
+                    '</thead>' +
+                    '<tbody>' + rowsHtml + '</tbody>' +
+                '</table>' +
+            '</div>'
+        );
+
+        document.title = (competition.name || 'Résultats') + ' — OpMind';
+    }
+
+    // ── Boot ─────────────────────────────────────────────────────────────────
+    var id = getCompetitionId();
+    if (!id) {
+        showError('AUCUN IDENTIFIANT DE COMPÉTITION');
+        return;
+    }
+
+    // Filtre is_public côté URL : double protection en plus des RLS policies.
+    var url = SUPABASE_URL + '/rest/v1/competitions'
+        + '?id=eq.' + encodeURIComponent(id)
+        + '&is_public=eq.true'
+        + '&select=*';
+
+    fetch(url, {
+        headers: {
+            'apikey':        SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Accept':        'application/json'
+        }
+    })
+        .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
+        .then(function (rows) {
+            if (!Array.isArray(rows) || rows.length === 0) {
+                showError('COMPÉTITION INTROUVABLE OU PRIVÉE');
+                return;
+            }
+            renderCompetition(rows[0]);
+        })
+        .catch(function (err) {
+            console.error(err);
+            showError('ERREUR DE CHARGEMENT');
+        });
+
+})();
+</script>
+
+</body>
+</html>
